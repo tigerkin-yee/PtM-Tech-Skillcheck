@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="a8098c1a-f86e-11da-bd1a-00112444be1e">
+  <stat_objects>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="7682ac42-67a6-4b65-8939-4ffaa4ec0fd8" />
+        <field name="Name" type="NameTableFieldDefinition" value="Lilith" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="ffd13850-bceb-488f-9a32-32a0c2b3823b" />
+        <field name="Level" type="IntegerTableFieldDefinition" value="8" />
+        <field name="Strength" type="IntegerTableFieldDefinition" value="15" />
+        <field name="Dexterity" type="IntegerTableFieldDefinition" value="13" />
+        <field name="Constitution" type="IntegerTableFieldDefinition" value="11" />
+        <field name="Intelligence" type="IntegerTableFieldDefinition" value="12" />
+        <field name="Wisdom" type="IntegerTableFieldDefinition" value="13" />
+        <field name="Charisma" type="IntegerTableFieldDefinition" value="15" />
+        <field name="Armor" type="IntegerTableFieldDefinition" value="13" />
+        <field name="Vitality" type="IntegerTableFieldDefinition" value="80" />
+        <field name="XPReward" type="GuidObjectTableFieldDefinition" value="4ee02692-eb98-43a6-803f-2da645364568" />
+        <field name="Sight" type="IntegerTableFieldDefinition" value="1600" />
+        <field name="Hearing" type="IntegerTableFieldDefinition" value="1100" />
+        <field name="FOV" type="IntegerTableFieldDefinition" value="90" />
+        <field name="Weight" type="FloatTableFieldDefinition" value="75" />
+        <field name="GameSize" type="EnumerationTableFieldDefinition" value="Medium" enumeration_type_name="ObjectSize" version="1" />
+        <field name="StepsType" type="EnumerationTableFieldDefinition" value="Leather" enumeration_type_name="StepsType" version="1" />
+        <field name="Progression Type" type="EnumerationTableFieldDefinition" value="Level" enumeration_type_name="Progression Type" version="1" />
+        <field name="ArmorType" type="EnumerationTableFieldDefinition" value="Leather" enumeration_type_name="ArmorType" version="1" />
+        <field name="Proficiency Group" type="EnumerationListTableFieldDefinition" value="Shields;LightArmor;HeavyArmor;Longbows;SimpleWeapons;Shortbows;Shortswords;MusicalInstrument" enumeration_type_name="ProficiencyGroupFlags" version="1" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
 <contentList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <content contentuid="hfb22c680g9ca6gda30g782ag52350cdd13ac" version="3">Double Doors</content>
-  <content contentuid="h00a88422gc615gd7d2g3588g74d57ab65152" version="1">Double Doors</content>
+  <content contentuid="h00a88422gc615gd7d2g3588g74d57ab65152" version="2">Double Doors</content>
   <content contentuid="h25220765g8f53ga80agefa7ge46c1ce7d4d2" version="1">Double Doors</content>
   <content contentuid="he9f42d72g7979g4d14gbae3gc472c53d4d7b" version="2">Player</content>
   <content contentuid="h0a4ccc88g193fg40acgafcbg7c50c789666c" version="2">Dummy</content>
   <content contentuid="h77df571agbc3cg4c35g90c0g8a1275979d92" version="2">Dummy</content>
   <content contentuid="h42c0be43gc4d2ge6cag097eg55f7240c01df" version="1">Civilian</content>
   <content contentuid="h18e25645g7fffgd1cbg8622g821bba485cba" version="1">Civilian</content>
+  <content contentuid="h9abf9533g073eg729dgf209g5307133b4741" version="10">Lilith</content>
+  <content contentuid="hbb022cb5gb8a4gb749gb3f5g8fff51076c7f" version="8">the Guard</content>
+  <content contentuid="h8dc6b537gdf7fg8e22g0e66g3e8293eb1a21" version="2">Halt. The tavern is closed—no entry for outsiders.</content>
+  <content contentuid="h120c69ccga6f8g82ebg8414g0f41dc8e7d0f" version="5">Halt. The tavern is closed—no entry for outsiders.</content>
+  <content contentuid="h224aab3bgc063gdc01g335ag1a8128173861" version="2">Halt. The tavern is closed  no entry for outsiders.</content>
 </contentList>

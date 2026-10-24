@@ -76,3 +76,7 @@ Thumbs.db
 # Loca Check         #
 ######################
 Data/Mods/PTM_SkillCheck_7807352a-f8b1-8590-656f-95c373379dad/Localization/English/EnglishXMLMergeHelper.exe
+# Local doc translations (not for PR)
+README.zh-CN.md
+**/README.zh-CN.md
+**/README.zh-CN.MD
