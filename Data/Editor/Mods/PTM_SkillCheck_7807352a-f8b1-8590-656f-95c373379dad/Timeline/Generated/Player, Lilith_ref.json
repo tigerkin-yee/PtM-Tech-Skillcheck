@@ -1,0 +1,29 @@
+{
+  "Flags": {
+    "336a0acc-1b9d-df60-7cff-f0ab82e06895": [
+      "Lilith-Met"
+    ],
+    "c6bed6a5-fd27-22f5-756a-c21e14e0ad24": [
+      "Lilith-Met",
+      "Lilith_Gave_Key"
+    ],
+    "f72d4914-8802-3ea5-7821-e57e3113b859": [ ],
+    "7426a657-233e-dd47-52f1-f7a47004e7b1": [ ],
+    "17fe92c8-51b7-d386-1fc7-510c09911cfb": [ ],
+    "4b10999f-5560-976c-ad25-95083f02af78": [ ],
+    "667a94c7-f7ba-89e1-0acd-01f41e98c509": [ ],
+    "aea510e6-f500-96a7-eac3-205608cde9c6": [ ],
+    "c8ed4963-f407-1d02-bd44-9f312418b020": [ ]
+  },
+  "Lines": {
+    "336a0acc-1b9d-df60-7cff-f0ab82e06895": "No way.",
+    "c6bed6a5-fd27-22f5-756a-c21e14e0ad24": "You've got the keyuse it and don't linger on my threshold.",
+    "f72d4914-8802-3ea5-7821-e57e3113b859": "Halt. The tavern is closed-no entry for outsiders.",
+    "7426a657-233e-dd47-52f1-f7a47004e7b1": "<i>She hasn't blinked in a while. Her grip on the spear eases, then tightens againlike she's reminding herself to stay sharp.<\/i>",
+    "17fe92c8-51b7-d386-1fc7-510c09911cfb": "Fine. But you're Us only if you act like it inside. One wrong word and I drag you out myself.",
+    "4b10999f-5560-976c-ad25-95083f02af78": "Hurry. If you're lying, I won't ask questions.",
+    "667a94c7-f7ba-89e1-0acd-01f41e98c509": "Absurd. <i>Almost a laugh<\/i>. Fine. One roundfor me. You slip in, you slip out. Understood?",
+    "aea510e6-f500-96a7-eac3-205608cde9c6": "Liar.",
+    "c8ed4963-f407-1d02-bd44-9f312418b020": "<i>If she's hiding anything, her face doesn't show it.<\/i>"
+  }
+}

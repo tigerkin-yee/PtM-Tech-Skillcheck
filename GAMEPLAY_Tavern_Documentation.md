@@ -10,7 +10,7 @@ The player must enter a locked tavern. **Lilith**, a drow guard, blocks the door
 
 | Route | Type | Intended outcome |
 |------|------|------------------|
-| Drow identity (Persuasion) | Dialogue · `DROW` tag + Persuasion | Key or permission to enter |
+| Drow identity | Dialogue · `DROW` tag only (**no skill roll**) | Lilith lets the player in; key or permission |
 | Deception | Dialogue · Deception | Success: let in; failure: **Liar.** → combat |
 | Perception (in dialogue) | Dialogue · Perception → empathy | Read her state, offer to fetch a drink, let in |
 | Leave | Dialogue | End; no flags |
@@ -34,7 +34,7 @@ The player must enter a locked tavern. **Lilith**, a drow guard, blocks the door
 | STR 15 · DEX 13 · CON 11 · INT 12 · WIS 13 · **CHA 15** |
 | **Gear / proficiencies** | Light armor, shield, shortsword, bows, etc. (see `Proficiency Group` in Character.txt) |
 
-**Design intent:** Level 8 drow guard with decent Charisma; **Deception / Persuasion** DCs around **14–17**. She is not easy to bluff, but the empathy branch (drink offer) is easier after the player reads her fatigue.
+**Design intent:** Level 8 drow guard with decent Charisma; **Deception** DC around **14–17**. The empathy branch (drink offer) after in-dialogue Perception may use a follow-up Persuasion check or auto-success per dialog setup. **Drow identity is not a Persuasion gate**—recognition among kin is enough for Lilith to stand aside.
 
 **Level binding:** Dialogue speaker 0 maps to level character list `bc026460-9511-4d5c-9e4f-20cc6e96e2b7` (`Player, Lilith.lsj` → `speakerlist`).
 
@@ -53,14 +53,14 @@ The player must enter a locked tavern. **Lilith**, a drow guard, blocks the door
 
 ```
 Greeting — Lilith: tavern closed, no outsiders
-├─ [DROW] This door is closed to surfacers, not to Us… → Persuasion → Lilith reply / key
+├─ [DROW] This door is closed to surfacers, not to Us… → Lilith reply → Set SC_Lilith_Gave_Key / key (no roll)
 ├─ Deception: captain sent for supplies → Success: Hurry… / Fail: Liar. → End → combat
 ├─ Perception: Watch her at the door → Success: Narrator observation → drink/empathy → Lilith lets in + key
 │                                      → Fail: noticed nothing → back to hub
 └─ Fine, I'll leave → End
 ```
 
-**Roll type (Toolkit):** **Skill** (not Raw_Ability) — Persuasion / Deception / Perception.
+**Roll type (Toolkit):** **Skill** (not Raw_Ability) for **Deception** and **Perception** only. The drow line uses a **Player tag check (`DROW`)** and goes straight to Lilith’s response—**no Active/Passive Roll** on that branch.
 
 **Liar. branch:** On the Deception **failure** Lilith line, **Set** `SC_Lilith_StartCombat` → **End Conversation** (do not return to hub).
 
@@ -74,11 +74,11 @@ Register all flags in **Story Editor → User Flags** as **Global**. Document th
 |------|----------------------------|---------|
 | `SC_Met_Lilith` | First time entering dialog (Greeting or hub entry) **Set** | README first-encounter flag; shorter repeat greeting |
 | `SC_Lilith_Read_Mood` | Perception **Success** (Roll Result or narrator Answer) **Set** | Unlocks drink / empathy player line |
-| `SC_Lilith_Gave_Key` | Any “let in” success (drow Persuasion, empathy, etc.) **Set** | Osiris **grants key** or entry permission |
+| `SC_Lilith_Gave_Key` | Drow identity let-in, empathy success, Deception success, etc. **Set** | Osiris **grants key** or entry permission |
 | `SC_Lilith_StartCombat` | Deception fail **Liar.** node **Set** | After **End**, Osiris **EnterCombat** |
 | `SC_Tavern_Secret_Button_Revealed` | World Perception success on hidden object (Osiris / interact) **Set** | Show **hidden button**; press unlocks door |
 
-**Checks (optional):** Repeat Greeting uses `if SC_Met_Lilith` / `if SC_Lilith_Gave_Key`.
+**Checks (optional):** Repeat Greeting uses `if SC_Met_Lilith` / `if SC_Lilith_Gave_Key`. Drow player line uses **check tag `DROW`** on the player (not Lilith).
 
 **Do not mix:** `SC_Lilith_Read_Mood` = in-dialogue read only; `SC_Tavern_Secret_Button_Revealed` = world Perception only.
 
@@ -111,12 +111,12 @@ ClearFlag((FLAG)SC_Lilith_StartCombat, _Player, 0, 0);
 
 ### 5.2 Let in → key
 
-**Chain:** Success node sets `SC_Lilith_Gave_Key` → on **DialogEnded** or **FlagReactionAfterDialog**:
+**Chain:** Dialog node sets `SC_Lilith_Gave_Key` (drow identity Lilith reply, empathy success, Deception success, etc.) → on **DialogEnded** or **FlagReactionAfterDialog**:
 
 - `TemplateAddTo` / spawn **Tavern Key** item on the player, or  
 - `Unlock` the door directly (if not using a key item)
 
-One flag can cover multiple success paths (drow Persuasion, empathy drink). Avoid duplicate keys: only grant if `SC_Lilith_Gave_Key` was not already set.
+One flag covers multiple let-in paths. Avoid duplicate keys: only grant if `SC_Lilith_Gave_Key` was not already set before this dialog instance ends.
 
 ### 5.3 Key on corpse (README)
 
@@ -142,9 +142,9 @@ Configure the **same key** Root Template on Lilith **loot** (Stats or level inst
 ## 6. End-to-end player flows
 
 ```
-                    ┌─ Drow Persuasion success ──→ SC_Lilith_Gave_Key ──→ key / open door
+                    ┌─ [DROW] surfacers / Us (no roll) ──→ SC_Lilith_Gave_Key ──→ key / open door
                     │
-Talk to Lilith ─────┼─ Deception success ───────→ let in (+ optional SC_Lilith_Gave_Key)
+Talk to Lilith ─────┼─ Deception success ───────→ let in (+ Set SC_Lilith_Gave_Key as designed)
                     │
                     ├─ Deception failure ───────→ SC_Lilith_StartCombat ──→ End ──→ EnterCombat
                     │
@@ -180,7 +180,7 @@ Kill Lilith ─── loot key ──→ open door
 1. Preferences: **disable** “Add impossible flag to dialogue”.  
 2. **Build** dialog → Story **Generate Definitions, Build and Reload**.  
 3. **File → Reload Level** before Game Mode (see README Patch 8 notes).  
-4. Test matrix: drow / non-drow · Deception pass/fail · in-dialogue Perception pass/fail · button Perception · post-combat loot · repeat dialog with `SC_Met_Lilith` only.
+4. Test matrix: **drow PC sees identity line, no Persuasion roll** · non-drow does not · Deception pass/fail · in-dialogue Perception pass/fail · button Perception · post-combat loot · repeat dialog with `SC_Met_Lilith`.
 
 ---
 
@@ -189,6 +189,8 @@ Kill Lilith ─── loot key ──→ open door
 Branch example: `feature/GAMEPLAY_Tavern_<YourName>_OP` (see CONTRIBUTING.md).  
 For full PTM, dialog files may later use `PTM_GP_Tavern_Lilith`; skill check can keep `Player, Lilith`.
 
+**Local docs:** English deliverable = this file (`GAMEPLAY_Tavern_Documentation.md`). Chinese mirror = `GAMEPLAY_Tavern_Documentation_CN.md` (local only, not committed). Keep both in sync when editing.
+
 ---
 
-*Matches dialogue design: outsider Greeting; drow “surfacers / Us”; Deception “Liar.” → combat; in-dialogue Perception + drink empathy; world Perception for hidden button.*
+*Matches dialogue design: outsider Greeting; drow “surfacers / Us” with **no Persuasion roll**; Deception “Liar.” → combat; in-dialogue Perception + drink empathy; world Perception for hidden button.*
