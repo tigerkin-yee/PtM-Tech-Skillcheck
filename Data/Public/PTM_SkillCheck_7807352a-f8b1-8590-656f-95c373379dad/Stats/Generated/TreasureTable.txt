@@ -1,0 +1,5 @@
+treasure itemtypes "Common","Uncommon","Rare","Epic","Legendary","Divine","Unique"
+new treasuretable "PTM_SC_LilithLoot"
+CanMerge 1
+new subtable "1,1"
+object category "I_PTM_SC_TavernKey",1,1,0,0,0,0,0,0

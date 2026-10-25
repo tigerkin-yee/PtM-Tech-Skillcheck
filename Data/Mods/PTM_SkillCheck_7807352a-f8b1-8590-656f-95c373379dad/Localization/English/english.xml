@@ -8,8 +8,8 @@
   <content contentuid="h77df571agbc3cg4c35g90c0g8a1275979d92" version="2">Dummy</content>
   <content contentuid="h42c0be43gc4d2ge6cag097eg55f7240c01df" version="1">Civilian</content>
   <content contentuid="h18e25645g7fffgd1cbg8622g821bba485cba" version="1">Civilian</content>
-  <content contentuid="h9abf9533g073eg729dgf209g5307133b4741" version="10">Lilith</content>
-  <content contentuid="hbb022cb5gb8a4gb749gb3f5g8fff51076c7f" version="8">the Guard</content>
+  <content contentuid="h9abf9533g073eg729dgf209g5307133b4741" version="14">Lilith</content>
+  <content contentuid="hbb022cb5gb8a4gb749gb3f5g8fff51076c7f" version="12">the Guard</content>
   <content contentuid="h8dc6b537gdf7fg8e22g0e66g3e8293eb1a21" version="2">Halt. The tavern is closed—no entry for outsiders.</content>
   <content contentuid="h120c69ccga6f8g82ebg8414g0f41dc8e7d0f" version="5">Halt. The tavern is closed—no entry for outsiders.</content>
   <content contentuid="h224aab3bgc063gdc01g335ag1a8128173861" version="23">Halt. The tavern is closed-no entry for outsiders.</content>
@@ -26,4 +26,6 @@
   <content contentuid="h3357bc40g5016g9d77g7b59g05627e6c1e6b" version="21"> Fine. I'll leave.</content>
   <content contentuid="ha7fc7750gdf10geb6dgd32fg0d96705a4198" version="11">You've got the key. Use it and don't linger on my threshold.</content>
   <content contentuid="h0212772fg4646g1f1ege6cdg491834d335e1" version="11">No way.</content>
+  <content contentuid="h3d4e5f6g7890g1234g5678g9012g3d4e5f6a7b8c" version="1">Tavern Key</content>
+  <content contentuid="h4e5f6a7g8901g2345g6789g0123g4e5f6a7b8c9d0" version="1">Opens the tavern door.</content>
 </contentList>

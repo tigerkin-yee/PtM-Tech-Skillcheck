@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<save>
+    <version major="4" minor="8" revision="0" build="500"/>
+    <region id="Templates">
+        <node id="RootTemplates">
+            <children>
+                <node id="GameObjects">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h3d4e5f6g7890g1234g5678g9012g3d4e5f6a7b8c" version="1"/>
+                    <attribute id="Description" type="TranslatedString" handle="h4e5f6a7g8901g2345g6789g0123g4e5f6a7b8c9d0" version="1"/>
+                    <attribute id="DropSound" type="FixedString" value="35db8b7d-69ee-868e-3201-d398f6c7d709"/>
+                    <attribute id="Icon" type="FixedString" value="Item_S_FOR_IncompleteMasterwork_CellarKey"/>
+                    <attribute id="InventoryMoveSound" type="FixedString" value="35db8b7d-69ee-868e-3201-d398f6c7d709"/>
+                    <attribute id="IsKey" type="bool" value="True"/>
+                    <attribute id="Key" type="LSString" value="PTM_SC_Tavern"/>
+                    <attribute id="MapKey" type="FixedString" value="2da08dbc-5c81-4cbc-beaa-6953bddd7e1e"/>
+                    <attribute id="Name" type="LSString" value="PTM_SC_TavernKey"/>
+                    <attribute id="ParentTemplateId" type="FixedString" value="15b05b8f-3a8f-485f-9e22-97b54d899b08"/>
+                    <attribute id="PhysicsTemplate" type="FixedString" value="fcd36d2f-814d-4d32-802f-100ad8a66313"/>
+                    <attribute id="Stats" type="FixedString" value="PTM_SC_TavernKey"/>
+                    <attribute id="StoryItem" type="bool" value="False"/>
+                    <attribute id="Type" type="FixedString" value="item"/>
+                    <attribute id="VisualTemplate" type="FixedString" value="66f75d2f-3e71-99ae-6d4d-3b580aba2b2c"/>
+                    <attribute id="maxStackAmount" type="int32" value="1"/>
+                </node>
+            </children>
+        </node>
+    </region>
+</save>

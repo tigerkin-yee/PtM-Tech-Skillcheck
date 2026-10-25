@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="e078e210-b9ba-48e5-afe3-c5eb91ba8545">
+  <stat_objects>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="2426c4e3-5615-466f-abc6-c38643df2664" />
+        <field name="Name" type="NameTableFieldDefinition" value="PTM_SC_TavernKey" />
+        <field name="InventoryTab" type="EnumerationTableFieldDefinition" value="BooksAndKeys" enumeration_type_name="InventoryTabs" version="1" />
+        <field name="Weight" type="FloatTableFieldDefinition" value="0.01" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="4aed8f93-9ac7-4bfd-b387-f140d79b703b" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" value="2da08dbc-5c81-4cbc-beaa-6953bddd7e1e" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h3d4e5f6g7890g1234g5678g9012g3d4e5f6a7b8c" version="1" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="h4e5f6a7g8901g2345g6789g0123g4e5f6a7b8c9d0" version="1" />
+        <field name="ObjectCategory" type="StringTableFieldDefinition" value="I_PTM_SC_TavernKey" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

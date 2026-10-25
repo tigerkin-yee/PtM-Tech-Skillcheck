@@ -1,0 +1,23 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+DB_PTM_SC_TavernDoor((ITEM)2d275c75-1a0b-4746-adc8-2b31aa7ec3a0);
+DB_PTM_SC_TavernDoor((ITEM)91e2f5fa-0be3-4f95-b23b-61c68a4965cb);
+KBSECTION
+IF
+LevelGameplayReady("GAMEPLAY_Tavern", _)
+AND
+DB_PTM_SC_TavernDoor(_Door)
+THEN
+Lock(_Door,"PTM_SC_Tavern");
+
+IF
+LevelGameplayReady("GAMEPLAY_Tavern", _)
+AND
+NOT TemplateIsInUserInventory((ITEMROOT)2da08dbc-5c81-4cbc-beaa-6953bddd7e1e,(CHARACTER)bc026460-9511-4d5c-9e4f-20cc6e96e2b7,1,0)
+THEN
+TemplateAddTo((ITEMROOT)2da08dbc-5c81-4cbc-beaa-6953bddd7e1e,(CHARACTER)bc026460-9511-4d5c-9e4f-20cc6e96e2b7,1,0);
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"
