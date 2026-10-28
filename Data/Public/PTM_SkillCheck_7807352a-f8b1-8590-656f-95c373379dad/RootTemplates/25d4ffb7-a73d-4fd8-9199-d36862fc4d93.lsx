@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<save>
+	<version major="4" minor="8" revision="0" build="500" lslib_meta="v1,bswap_guids,lsf_keys_adjacency" />
+	<region id="Templates">
+		<node id="Templates">
+			<children>
+				<node id="GameObjects">
+					<attribute id="MapKey" type="FixedString" value="25d4ffb7-a73d-4fd8-9199-d36862fc4d93" />
+					<attribute id="Name" type="LSString" value="PTM_SC_Tavern_SecretButton" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="Type" type="FixedString" value="item" />
+					<attribute id="ParentTemplateId" type="FixedString" value="b1db5eb0-49c2-4c68-ad9b-5ed79d59eeb5" />
+					<attribute id="DisplayName" type="TranslatedString" handle="h99eb1ea3g5430gf59dg5f39g99cb05a1899f" version="1" />
+					<attribute id="Icon" type="FixedString" value="InteractItem_Lever" />
+					<attribute id="Opacity" type="float" value="0" />
+					<attribute id="ReadinessFlags" type="uint32" value="128" />
+					<children>
+						<node id="Scripts">
+							<children>
+								<node id="Script">
+									<attribute id="UUID" type="FixedString" value="7e6de9b7-56f4-43db-b7ab-1a63e7475f56" />
+									<children>
+										<node id="Parameters">
+											<children>
+												<node id="Parameter">
+													<attribute id="MapKey" type="FixedString" value="CommentAD" />
+													<attribute id="Type" type="int32" value="3" />
+													<attribute id="Value" type="LSString" value="0xbaadf00d" />
+												</node>
+												<node id="Parameter">
+													<attribute id="MapKey" type="FixedString" value="Event" />
+													<attribute id="Type" type="int32" value="3" />
+													<attribute id="Value" type="LSString" value="0xbaadf00d" />
+												</node>
+												<node id="Parameter">
+													<attribute id="MapKey" type="FixedString" value="HardcoreOnly" />
+													<attribute id="Type" type="int32" value="1" />
+													<attribute id="Value" type="LSString" value="0" />
+												</node>
+											</children>
+										</node>
+									</children>
+								</node>
+								<node id="Script">
+									<attribute id="UUID" type="FixedString" value="68f5f134-8507-4b42-812b-cc444732141f" />
+									<children>
+										<node id="Parameters">
+											<children>
+												<node id="Parameter">
+													<attribute id="MapKey" type="FixedString" value="DC" />
+													<attribute id="Type" type="int32" value="1" />
+													<attribute id="Value" type="LSString" value="10" />
+												</node>
+												<node id="Parameter">
+													<attribute id="MapKey" type="FixedString" value="HardcoreOnly" />
+													<attribute id="Type" type="int32" value="1" />
+													<attribute id="Value" type="LSString" value="0" />
+												</node>
+												<node id="Parameter">
+													<attribute id="MapKey" type="FixedString" value="MinDistance" />
+													<attribute id="Type" type="int32" value="2" />
+													<attribute id="Value" type="LSString" value="5" />
+												</node>
+												<node id="Parameter">
+													<attribute id="MapKey" type="FixedString" value="RevealOnlyInTrigger" />
+													<attribute id="Type" type="int32" value="7" />
+													<attribute id="Value" type="LSString" value="0xbaadf00d" />
+												</node>
+											</children>
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+			</children>
+		</node>
+	</region>
+</save>
