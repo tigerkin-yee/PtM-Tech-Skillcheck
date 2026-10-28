@@ -1,0 +1,26 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+KBSECTION
+// GAMEPLAY_Tavern — grant PTM_SC_TavernKey after Lilith lets the player in.
+// Dialog: Player, Lilith (9919b6fc-d435-7ebb-73d7-f4a86dfc300b)
+// User flag display name: Global_Lilith_Gave_Key (Global, dialog nodes)
+// Osiris flag id (Name_UUID): Global_Lilith_Gave_Key_5a6dfef9-21b4-68e9-ef37-e656bc18f9bc
+// Run Story Editor: Generate Definitions, Build and Reload (Ctrl+F7) after renaming flags.
+
+IF
+DialogEnded(_Dialog, _InstanceID)
+AND
+DialogGetInvolvedPlayer(_InstanceID, 1, _Player)
+AND
+GetFlag((FLAG)Global_Lilith_Gave_Key_5a6dfef9-21b4-68e9-ef37-e656bc18f9bc, NULL_00000000-0000-0000-0000-000000000000, 1)
+AND
+TemplateIsInInventory((ITEMROOT)2da08dbc-5c81-4cbc-beaa-6953bddd7e1e, _Player, _KeyCount)
+AND
+_KeyCount == 0
+THEN
+TemplateAddTo((ITEMROOT)2da08dbc-5c81-4cbc-beaa-6953bddd7e1e, _Player, 1, 1);
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"

@@ -1,0 +1,25 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+KBSECTION
+// GAMEPLAY_Tavern — Deception fail (Liar.) ends dialog, then combat.
+// Dialog: Player, Lilith (9919b6fc-d435-7ebb-73d7-f4a86dfc300b)
+// User flag display name: Global_Lilith_StartCombat (Global, Liar. end node)
+// Osiris flag id (Name_UUID): Global_Lilith_StartCombat_179d19ac-ceb5-68f6-dc16-ff1b9761eeb9
+// Generate Definitions, Build and Reload (Ctrl+F7) after flag renames.
+
+IF
+DialogEnded(_Dialog, _InstanceID)
+AND
+GetFlag((FLAG)Global_Lilith_StartCombat_179d19ac-ceb5-68f6-dc16-ff1b9761eeb9, NULL_00000000-0000-0000-0000-000000000000, 1)
+AND
+DialogGetInvolvedPlayer(_InstanceID, 1, _Player)
+AND
+DialogGetInvolvedNPC(_InstanceID, 1, _Lilith)
+THEN
+EnterCombat(_Lilith, _Player);
+ClearFlag((FLAG)Global_Lilith_StartCombat_179d19ac-ceb5-68f6-dc16-ff1b9761eeb9, NULL_00000000-0000-0000-0000-000000000000, 0);
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "Start"

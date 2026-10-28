@@ -1,7 +1,6 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-DB_PTM_SC_TavernDoor((ITEM)2d275c75-1a0b-4746-adc8-2b31aa7ec3a0);
 DB_PTM_SC_TavernDoor((ITEM)91e2f5fa-0be3-4f95-b23b-61c68a4965cb);
 KBSECTION
 IF

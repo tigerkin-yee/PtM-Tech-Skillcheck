@@ -53,7 +53,7 @@ The player must enter a locked tavern. **Lilith**, a drow guard, blocks the door
 
 ```
 Greeting — Lilith: tavern closed, no outsiders
-├─ [DROW] This door is closed to surfacers, not to Us… → Lilith reply → Set SC_Lilith_Gave_Key / key (no roll)
+├─ [DROW] This door is closed to surfacers, not to Us… → Lilith reply → Set `Global_Lilith_Gave_Key` (no roll; Osiris grants key)
 ├─ Deception: captain sent for supplies → Success: Hurry… / Fail: Liar. → End → combat
 ├─ Perception: Watch her at the door → Success: Narrator observation → drink/empathy → Lilith lets in + key
 │                                      → Fail: noticed nothing → back to hub
@@ -62,7 +62,7 @@ Greeting — Lilith: tavern closed, no outsiders
 
 **Roll type (Toolkit):** **Skill** (not Raw_Ability) for **Deception** and **Perception** only. The drow line uses a **Player tag check (`DROW`)** and goes straight to Lilith’s response—**no Active/Passive Roll** on that branch.
 
-**Liar. branch:** On the Deception **failure** Lilith line, **Set** `SC_Lilith_StartCombat` → **End Conversation** (do not return to hub).
+**Liar. branch:** On the Deception **failure** Lilith line, **Set** `Global_Lilith_StartCombat` → **End Conversation** (do not return to hub).
 
 ---
 
@@ -70,63 +70,104 @@ Greeting — Lilith: tavern closed, no outsiders
 
 Register all flags in **Story Editor → User Flags** as **Global**. Document them in dialog comments and goal file headers.
 
+**Naming (matches current `Player, Lilith`)**
+
+- **Dialog flags:** `Lilith-Met`, `Global_Lilith_Gave_Key`, `Global_Lilith_StartCombat`, etc. (Osiris `(FLAG)` names must match Story Editor exactly, including the `Global_` prefix and the hyphen in `Lilith-Met`).
+- **Level / goals / items:** `PTM_SC_*` (e.g. `PTM_SC_TavernDoor`, `PTM_SC_TavernKey`, `PTM_SC_Tavern_Secret_Button_Revealed` below).
+
 | Flag | Where set (dialog / level) | Purpose |
 |------|----------------------------|---------|
-| `SC_Met_Lilith` | First time entering dialog (Greeting or hub entry) **Set** | README first-encounter flag; shorter repeat greeting |
-| `SC_Lilith_Read_Mood` | Perception **Success** (Roll Result or narrator Answer) **Set** | Unlocks drink / empathy player line |
-| `SC_Lilith_Gave_Key` | Drow identity let-in, empathy success, Deception success, etc. **Set** | Osiris **grants key** or entry permission |
-| `SC_Lilith_StartCombat` | Deception fail **Liar.** node **Set** | After **End**, Osiris **EnterCombat** |
-| `SC_Tavern_Secret_Button_Revealed` | World Perception success on hidden object (Osiris / interact) **Set** | Show **hidden button**; press unlocks door |
+| `Lilith-Met` | First time entering dialog (Greeting or hub entry) **Set** | README first-encounter flag; shorter repeat greeting |
+| `Lilith_Read_Mood` | Perception **Success** (Roll Result or narrator Answer) **Set** | Unlocks drink / empathy player line (when wired in dialog) |
+| `Global_Lilith_Gave_Key` | Drow identity let-in, empathy success, Deception success, etc. **Set** | Osiris **grants key** or entry permission |
+| `Global_Lilith_StartCombat` | Deception fail **Liar.** node **Set** | After **End**, Osiris **EnterCombat** |
+| `PTM_SC_Tavern_Secret_Button_Revealed` | World Perception success on hidden object (Osiris / interact) **Set** | Show **hidden button**; press unlocks door |
 
-**Checks (optional):** Repeat Greeting uses `if SC_Met_Lilith` / `if SC_Lilith_Gave_Key`. Drow player line uses **check tag `DROW`** on the player (not Lilith).
+**Checks (optional):** Repeat Greeting uses `if Lilith-Met` / `if Global_Lilith_Gave_Key`. Drow player line uses **check tag `DROW`** on the player (not Lilith).
 
-**Do not mix:** `SC_Lilith_Read_Mood` = in-dialogue read only; `SC_Tavern_Secret_Button_Revealed` = world Perception only.
+**Do not mix:** `Lilith_Read_Mood` = in-dialogue read only; `PTM_SC_Tavern_Secret_Button_Revealed` = world Perception only.
 
 ---
 
 ## 5. Osiris / Story wiring
 
 Goals live under:  
-`Data/Mods/PTM_SkillCheck_…/Story/RawFiles/Goals/`
+`Data/Mods/PTM_SkillCheck_…/Story/RawFiles/Goals/` (Story Editor tree: `_Start/_PTM`, see CONTRIBUTING.md).
+
+**How to split goals (recommended)**
+
+| File | Responsibility |
+|------|----------------|
+| `PTM_SC_TavernDoor.goal` | Level ready: **Lock** the tavern entry door, `DB_PTM_SC_TavernDoor`, seed key on **Lilith** for loot |
+| `PTM_SC_LilithKey.goal` | After dialog **Sets** `Global_Lilith_Gave_Key` → **DialogEnded** → `TemplateAddTo` on **player** (dialog does not give the item) |
+| `PTM_SC_LilithCombat.goal` | `Global_Lilith_StartCombat` → **DialogEnded** → `EnterCombat` |
+| `PTM_SC_TavernSecretButton.goal` (optional) | World Perception / button → `PTM_SC_Tavern_Secret_Button_Revealed` → **Unlock** |
+
+For this skill check you may merge key + combat into one `PTM_SC_LilithDialog.goal`. **Avoid** putting all dialog reactions inside `PTM_SC_TavernDoor`—keep that goal for door/level init only; separate goals are easier to test and match CONTRIBUTING header comments.
+
+**BG3 Osiris notes (not Divinity):** Use `DialogEnded(_Dialog, _InstanceID)`; `DialogGetInvolvedPlayer(_InstanceID, 1, _Player)` (player index **1**, GUID out); global flags via `GetFlag((FLAG)Global_…_<uuid>, NULL_00000000-0000-0000-0000-000000000000, 1)` after **Generate Definitions**. Do **not** use `GlobalGetFlag` or `DialogGetInvolvedPlayer(_Inst, _Player, 1)`.
+
+| User flag (Story Editor) | Osiris `(FLAG)` suffix UUID |
+|--------------------------|-----------------------------|
+| `Global_Lilith_Gave_Key` | `5a6dfef9-21b4-68e9-ef37-e656bc18f9bc` |
+| `Global_Lilith_StartCombat` | `179d19ac-ceb5-68f6-dc16-ff1b9761eeb9` |
+
+**Key item root template:** `(ITEMROOT)2da08dbc-5c81-4cbc-beaa-6953bddd7e1e` (`PTM_SC_TavernKey`).
 
 ### 5.1 Deception failure → combat
 
-**Chain:** Dialog sets `SC_Lilith_StartCombat` → **DialogEnded** → goal runs.
+**Chain:** Dialog sets `Global_Lilith_StartCombat` → **DialogEnded** → `PTM_SC_LilithCombat.goal` runs.
 
 ```osiris
 IF
-DialogEnded((DIALOGINSTANCE)_Inst, _)
+DialogEnded(_Dialog, _InstanceID)
 AND
-GlobalGetFlag((FLAG)SC_Lilith_StartCombat, 1)
+GetFlag((FLAG)Global_Lilith_StartCombat_179d19ac-ceb5-68f6-dc16-ff1b9761eeb9, NULL_00000000-0000-0000-0000-000000000000, 1)
 AND
-DialogGetInvolvedPlayer(_Inst, _Player, 1)
+DialogGetInvolvedPlayer(_InstanceID, 1, _Player)
 AND
-DialogGetInvolvedNPC(_Inst, _Lilith, 1)
+DialogGetInvolvedNPC(_InstanceID, 1, _Lilith)
 THEN
 EnterCombat(_Lilith, _Player);
-ClearFlag((FLAG)SC_Lilith_StartCombat, _Player, 0, 0);
+ClearFlag((FLAG)Global_Lilith_StartCombat_179d19ac-ceb5-68f6-dc16-ff1b9761eeb9, NULL_00000000-0000-0000-0000-000000000000, 0);
 ```
-
-**Example goal name:** `PTM_SC_LilithCombat.goal`
 
 ### 5.2 Let in → key
 
-**Chain:** Dialog node sets `SC_Lilith_Gave_Key` (drow identity Lilith reply, empathy success, Deception success, etc.) → on **DialogEnded** or **FlagReactionAfterDialog**:
+**Chain:** Dialog node **Set** `Global_Lilith_Gave_Key` only (drow identity, empathy, Deception success, etc.) → on **DialogEnded**, `PTM_SC_LilithKey.goal` grants the item:
 
-- `TemplateAddTo` / spawn **Tavern Key** item on the player, or  
-- `Unlock` the door directly (if not using a key item)
+```osiris
+IF
+DialogEnded(_Dialog, _InstanceID)
+AND
+DialogGetInvolvedPlayer(_InstanceID, 1, _Player)
+AND
+GetFlag((FLAG)Global_Lilith_Gave_Key_5a6dfef9-21b4-68e9-ef37-e656bc18f9bc, NULL_00000000-0000-0000-0000-000000000000, 1)
+AND
+TemplateIsInInventory((ITEMROOT)2da08dbc-5c81-4cbc-beaa-6953bddd7e1e, _Player, _KeyCount)
+AND
+_KeyCount == 0
+THEN
+TemplateAddTo((ITEMROOT)2da08dbc-5c81-4cbc-beaa-6953bddd7e1e, _Player, 1, 1);
+```
 
-One flag covers multiple let-in paths. Avoid duplicate keys: only grant if `SC_Lilith_Gave_Key` was not already set before this dialog instance ends.
+One flag covers multiple let-in paths. The player uses the key on the locked door (no automatic `Unlock` in these goals).
 
 ### 5.3 Key on corpse (README)
 
 Configure the **same key** Root Template on Lilith **loot** (Stats or level instance).  
-`SC_Lilith_Gave_Key` and corpse loot should share the **same item template**; the door’s **Key** field points to that template.
+`Global_Lilith_Gave_Key` and corpse loot should share the **same item template** (`PTM_SC_TavernKey`); the door **Key** field is `PTM_SC_Tavern`.
 
 ### 5.4 Locked door
 
-- Door entity: **Locked**, key = template above; or  
-- Osiris: when `SC_Lilith_Gave_Key` or button flag is set, `Unlock` / `Open` the door instance.
+**Scope:** Only the **outer tavern entry** is managed by `PTM_SC_TavernDoor` — level item `91e2f5fa-0be3-4f95-b23b-61c68a4965cb` (`Levels/GAMEPLAY_Tavern/Items/…`). A paired inner leaf (`2d275c75-…`) is **not** in `DB_PTM_SC_TavernDoor` (Osiris does not lock it).
+
+On **LevelGameplayReady** for `GAMEPLAY_Tavern`:
+
+- `Lock(_Door, "PTM_SC_Tavern")` for each row in `DB_PTM_SC_TavernDoor`.
+- Level instance **Key** field = `PTM_SC_Tavern` (matches key item stats name).
+
+Optional later: `Unlock` when `PTM_SC_Tavern_Secret_Button_Revealed` is set (SecretButton goal, not wired yet).
 
 ### 5.5 Hidden button (discreet way)
 
@@ -134,7 +175,7 @@ Configure the **same key** Root Template on Lilith **loot** (Stats or level inst
 
 1. Hidden interactable starts **non-interactable / hidden**.  
 2. Player **Perception** on a placed object or zone (suggested DC **10**, Skill roll not raw Wisdom).  
-3. Success → set `SC_Tavern_Secret_Button_Revealed` → goal shows button or enables interact.  
+3. Success → set `PTM_SC_Tavern_Secret_Button_Revealed` → goal shows button or enables interact.  
 4. Button press → goal **Unlock** the same tavern door.
 
 ---
@@ -142,22 +183,22 @@ Configure the **same key** Root Template on Lilith **loot** (Stats or level inst
 ## 6. End-to-end player flows
 
 ```
-                    ┌─ [DROW] surfacers / Us (no roll) ──→ SC_Lilith_Gave_Key ──→ key / open door
+                    ┌─ [DROW] surfacers / Us (no roll) ──→ Global_Lilith_Gave_Key ──→ Osiris key / open door
                     │
-Talk to Lilith ─────┼─ Deception success ───────→ let in (+ Set SC_Lilith_Gave_Key as designed)
+Talk to Lilith ─────┼─ Deception success ───────→ let in (+ Set Global_Lilith_Gave_Key)
                     │
-                    ├─ Deception failure ───────→ SC_Lilith_StartCombat ──→ End ──→ EnterCombat
+                    ├─ Deception failure ───────→ Global_Lilith_StartCombat ──→ End ──→ EnterCombat
                     │
-                    ├─ Perception success ──────→ SC_Lilith_Read_Mood ──→ empathy ──→ SC_Lilith_Gave_Key
+                    ├─ Perception success ──────→ Lilith_Read_Mood ──→ empathy ──→ Global_Lilith_Gave_Key
                     │
                     └─ Leave
 
-Skip dialog ─── world Perception ──→ SC_Tavern_Secret_Button_Revealed ──→ button ──→ open door
+Skip dialog ─── world Perception ──→ PTM_SC_Tavern_Secret_Button_Revealed ──→ button ──→ open door
 
 Kill Lilith ─── loot key ──→ open door
 ```
 
-**First conversation:** Opening `Player, Lilith` **Sets** `SC_Met_Lilith` (README first-encounter requirement).
+**First conversation:** Opening `Player, Lilith` **Sets** `Lilith-Met` (README first-encounter requirement).
 
 ---
 
@@ -168,10 +209,11 @@ Kill Lilith ─── loot key ──→ open door
 | Lilith stats | `Data/Public/…/Stats/Generated/Data/Character.txt` |
 | Dialog | `Data/Mods/…/Story/Dialogs/Player, Lilith.lsj` |
 | Dialog binary | `Story/DialogsBinary/Player, Lilith.lsf` (from Build) |
-| Story goals | `Story/RawFiles/Goals/*.goal` (combat, key, button) |
+| Story goals | `PTM_SC_TavernDoor` + `PTM_SC_LilithKey` / `PTM_SC_LilithCombat` (+ optional SecretButton) |
 | Flag defs | Story Editor → Generate Definitions |
-| Level | `Levels/GAMEPLAY_Tavern` — Lilith, door, hidden button |
-| Key item | Public/Stats or derived template + door Key field |
+| Level | `Levels/GAMEPLAY_Tavern` — Lilith `bc026460-…`, outer door `91e2f5fa-…`, hidden button (TBD) |
+| Key item | Root `2da08dbc-…` · stats `PTM_SC_TavernKey` · door key id `PTM_SC_Tavern` |
+| Lilith loot key | `PTM_SC_TavernDoor` seeds one key on Lilith if missing (`TemplateIsInUserInventory`; prefer `TemplateIsInInventory` if UserID warnings appear) |
 
 ---
 
@@ -180,7 +222,7 @@ Kill Lilith ─── loot key ──→ open door
 1. Preferences: **disable** “Add impossible flag to dialogue”.  
 2. **Build** dialog → Story **Generate Definitions, Build and Reload**.  
 3. **File → Reload Level** before Game Mode (see README Patch 8 notes).  
-4. Test matrix: **drow PC sees identity line, no Persuasion roll** · non-drow does not · Deception pass/fail · in-dialogue Perception pass/fail · button Perception · post-combat loot · repeat dialog with `SC_Met_Lilith`.
+4. Test matrix: **drow PC sees identity line, no Persuasion roll** · non-drow does not · Deception pass/fail · in-dialogue Perception pass/fail · button Perception · post-combat loot · repeat dialog with `Lilith-Met` / key-already-given greeting.
 
 ---
 
