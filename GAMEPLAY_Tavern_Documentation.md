@@ -80,7 +80,7 @@ Register all flags in **Story Editor → User Flags** as **Global**. Document th
 | `Lilith-Met` | First time entering dialog (Greeting or hub entry) **Set** | README first-encounter flag; shorter repeat greeting |
 | `Lilith_Read_Mood` | Perception **Success** (Roll Result or narrator Answer) **Set** | Unlocks drink / empathy player line (when wired in dialog) |
 | `Global_Lilith_Gave_Key` | Drow identity let-in, empathy success, Deception success, etc. **Set** | Osiris **grants key** or entry permission |
-| `Global_Lilith_StartCombat` | Deception fail **Liar.** node **Set** | After **End**, Osiris **EnterCombat** |
+| `Global_Lilith_StartCombat` | Deception fail **Liar.** node **Set** | After **End**, Osiris **SetHostileAndEnterCombat** |
 | `PTM_SC_Tavern_Secret_Button_Revealed` | World Perception success on hidden object (Osiris / interact) **Set** | Show **hidden button**; press unlocks door |
 
 **Checks:** Repeat Greeting uses `if Lilith-Met` / `if Global_Lilith_Gave_Key`. Drow player line uses **check tag `DROW`** on the player (not Lilith).
@@ -93,13 +93,13 @@ Register all flags in **Story Editor → User Flags** as **Global**. Document th
 |------|----------------|
 | `PTM_SC_TavernDoor.goal` | Level ready: **Lock** the tavern entry door, `DB_PTM_SC_TavernDoor`, seed key on **Lilith** for loot |
 | `PTM_SC_LilithKey.goal` | After dialog **Sets** `Global_Lilith_Gave_Key` → **DialogEnded** → `TemplateAddTo` on **player** (dialog does not give the item) |
-| `PTM_SC_LilithCombat.goal` | `Global_Lilith_StartCombat` → **DialogEnded** → `EnterCombat` |
+| `PTM_SC_LilithCombat.goal` | `Global_Lilith_StartCombat` → **DialogEnded** → `SetHostileAndEnterCombat` |
 | `PTM_SC_TavernSecretButton.goal` | World Perception / button → `PTM_SC_Tavern_Secret_Button_Revealed` → **Unlock** |
 
 | User flag (Story Editor) | Osiris `(FLAG)` suffix UUID |
 |--------------------------|-----------------------------|
 | `Global_Lilith_Gave_Key` | `5a6dfef9-21b4-68e9-ef37-e656bc18f9bc` |
-| `Global_Lilith_StartCombat` | `179d19ac-ceb5-68f6-dc16-ff1b9761eeb9` |
+| `Global_Lilith_StartCombat` | `677a10d3-7ea6-2d3d-2851-323387d79e5e` |
 | `PTM_SC_Tavern_Secret_Button_Revealed` | `b2a8a327-c7a9-d103-f5b0-f483b228e1b4` |
 
 **Key item root template:** `(ITEMROOT)2da08dbc-5c81-4cbc-beaa-6953bddd7e1e` (`PTM_SC_TavernKey`).
@@ -112,14 +112,16 @@ Register all flags in **Story Editor → User Flags** as **Global**. Document th
 IF
 DialogEnded(_Dialog, _InstanceID)
 AND
-GetFlag((FLAG)Global_Lilith_StartCombat_179d19ac-ceb5-68f6-dc16-ff1b9761eeb9, NULL_00000000-0000-0000-0000-000000000000, 1)
+GetFlag((FLAG)Global_Lilith_StartCombat_677a10d3-7ea6-2d3d-2851-323387d79e5e, NULL_00000000-0000-0000-0000-000000000000, 1)
 AND
 DialogGetInvolvedPlayer(_InstanceID, 1, _Player)
 AND
-DialogGetInvolvedNPC(_InstanceID, 1, _Lilith)
+GetFaction((CHARACTER)bc026460-9511-4d5c-9e4f-20cc6e96e2b7, _LilithFaction)
+AND
+GetFaction(_Player, _PlayerFaction)
 THEN
-EnterCombat(_Lilith, _Player);
-ClearFlag((FLAG)Global_Lilith_StartCombat_179d19ac-ceb5-68f6-dc16-ff1b9761eeb9, NULL_00000000-0000-0000-0000-000000000000, 0);
+SetHostileAndEnterCombat(_LilithFaction, _PlayerFaction, (CHARACTER)bc026460-9511-4d5c-9e4f-20cc6e96e2b7, _Player);
+ClearFlag((FLAG)Global_Lilith_StartCombat_677a10d3-7ea6-2d3d-2851-323387d79e5e, NULL_00000000-0000-0000-0000-000000000000, 0);
 ```
 
 ### 5.2 Let in → key
@@ -187,7 +189,7 @@ Flow:
                     │
 Talk to Lilith ─────┼─ Deception success ───────→ let in (+ Set Global_Lilith_Gave_Key)
                     │
-                    ├─ Deception failure ───────→ Global_Lilith_StartCombat ──→ End ──→ EnterCombat
+                    ├─ Deception failure ───────→ Global_Lilith_StartCombat ──→ End ──→ SetHostileAndEnterCombat
                     │
                     ├─ Perception success ──────→ Lilith_Read_Mood ──→ empathy ──→ Global_Lilith_Gave_Key
                     │
